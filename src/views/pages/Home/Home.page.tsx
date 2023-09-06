@@ -2,6 +2,7 @@ import fetch from 'cross-fetch'
 import React, { useEffect, useState } from 'react'
 
 import logo from '../../../assets/logo.svg'
+import { Link } from 'react-router-dom'
 
 type DocsList = Array<{ name: string; url: string }>
 
@@ -20,6 +21,9 @@ export const HomePage: React.FC = () => {
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" />
+      <Link to="/form" className="mb-4 text-4xl underline hover:text-red-300">
+        GO TO FORM
+      </Link>
       <p>{process.env.REACT_APP_TEXT}</p>
       <p>
         <button

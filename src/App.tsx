@@ -10,9 +10,9 @@ const App: React.FC = () => {
   return (
     <main className="App">
       <Routes>
-        <Route path="/" element={<FormPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/form" element={<FormPage />} />
         <Route path="/create" element={<FormPage />} />
-        <Route path="/default" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </main>

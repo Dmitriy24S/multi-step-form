@@ -3,16 +3,23 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 
 import App from './App'
+import { BrowserRouter } from 'react-router-dom'
+
+const WrappedApp = () => (
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+)
 
 test('Show App Component', () => {
-  render(<App />)
+  render(<WrappedApp />)
 
   expect(screen.getByText("I'm REACT_APP_TEXT from .env")).toBeInTheDocument()
 })
 
 test('Working Counter', async () => {
   const user = userEvent.setup()
-  const { getByText } = render(<App />)
+  const { getByText } = render(<WrappedApp />)
   expect(getByText('count is: 0')).toBeInTheDocument()
 
   const button = getByText(/count is: \d/)
@@ -28,7 +35,7 @@ test('Working Counter', async () => {
 })
 
 test('working with msw', async () => {
-  render(<App />)
+  render(<WrappedApp />)
 
   await waitFor(() => {
     expect(screen.getByText('MSW')).toBeInTheDocument()

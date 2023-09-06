@@ -14,23 +14,5 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '18.16.0'
-      - uses: npm/action-setup@v2
-        name: Install npm
-        with:
-          version: 8
-          run_install: false
-
-      - name: Get npm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(npm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v3
-        name: Setup npm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-npm-store-${{ hashFiles('**/npm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-store-
       - run: npm install
-      - run: npm build
+      - run: npm run build
