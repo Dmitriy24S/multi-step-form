@@ -14,25 +14,25 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '18.16.0'
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - uses: npm/action-setup@v2
+        name: Install npm
         with:
           version: 8
           run_install: false
 
-      - name: Get pnpm store directory
+      - name: Get npm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "STORE_PATH=$(npm store path --silent)" >> $GITHUB_ENV
 
       - uses: actions/cache@v3
-        name: Setup pnpm cache
+        name: Setup npm cache
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-npm-store-${{ hashFiles('**/npm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-npm-store-
 
       - name: Install dependencies
-        run: pnpm install
-      - run: pnpm typecheck
+        run: npm install
+      - run: npm typecheck
