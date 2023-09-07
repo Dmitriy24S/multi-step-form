@@ -105,6 +105,7 @@ export const FormIntro = () => {
           <Label htmlFor="phone">Phone</Label>
           <Controller
             name="phone"
+            // autoFocus
             control={control}
             render={({ field }) => (
               <MaskedInput

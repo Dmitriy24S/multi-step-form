@@ -1,8 +1,8 @@
 import fetch from 'cross-fetch'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import logo from '../../../assets/logo.svg'
-import { Link } from 'react-router-dom'
 
 type DocsList = Array<{ name: string; url: string }>
 

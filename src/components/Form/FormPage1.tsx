@@ -56,7 +56,6 @@ const formSchema = yup.object().shape({
 
 export const FormPage1 = () => {
   const dispatch = useAppDispatch()
-
   const formData = useAppSelector((state) => state.formState.formData)
 
   const {
@@ -111,6 +110,7 @@ export const FormPage1 = () => {
           render={({ field }) => (
             <Input
               {...field}
+              // autoFocus
               id="nickname"
               type="text"
               placeholder="e.g. Nickname"

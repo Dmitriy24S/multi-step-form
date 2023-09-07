@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 
-import { FormIntro, FormPage1, FormPage2 } from '../../../components/Form'
+import {
+  FormIntro,
+  FormPage1,
+  FormPage2,
+  FormEnd,
+} from '../../../components/Form'
 import { FormProgress } from '../../../components/Form/FormProgress'
 
 interface Props {
@@ -16,6 +21,8 @@ export const FormLayout = ({ formPage }: Props) => {
         return <FormPage1 />
       case 3:
         return <FormPage2 />
+      case 4:
+        return <FormEnd />
       default:
         return <FormIntro />
     }

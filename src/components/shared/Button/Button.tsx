@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-const Button = styled.button`
+const Button = styled.button<{ $sm?: boolean }>`
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 7px;
@@ -12,6 +12,12 @@ const Button = styled.button`
   &:hover {
     background-color: #ffaab8;
   }
+
+  ${(props) =>
+    props.$sm &&
+    css`
+      padding: 0.5rem 0.7rem;
+    `}
 `
 
 const FormNavigationButtonContainer = styled.div`

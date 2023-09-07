@@ -47,9 +47,25 @@ const Input = styled.input`
   background-color: #181529;
   border: none;
 `
+
 const ErrorText = styled.p`
   font-size: 1rem;
   color: #fa4242;
+`
+
+const Textarea = styled.textarea`
+  border-radius: 5px;
+  width: 100%;
+  background-color: #181529;
+  border: none;
+  min-height: 100px;
+`
+
+const Select = styled.select`
+  border-radius: 5px;
+  width: 100%;
+  background-color: #181529;
+  border: none;
 `
 
 const Form = styled.form`
@@ -74,6 +90,13 @@ const MaskedInput = styled(InputMask)`
   border: none;
 `
 
+const RadioGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+`
+
 export {
   Header,
   List,
@@ -85,4 +108,7 @@ export {
   Form,
   FormGroup,
   MaskedInput,
+  Textarea,
+  Select,
+  RadioGroup,
 }
