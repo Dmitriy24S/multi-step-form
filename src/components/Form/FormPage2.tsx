@@ -106,10 +106,11 @@ export const FormPage2 = () => {
             console.log('.map advantege', advantage)
 
             return (
-              <Fragment key={`${advantage} ${index + 1}`}>
-                <div className="flex gap-2">
+              <Fragment key={index}>
+                <div className="flex gap-2 mb-2">
                   <Controller
-                    name={`advantages[${index}]`}
+                    // name={`advantages[${index}]`}
+                    name="advantages"
                     control={control}
                     render={({ field }) => (
                       <Input
@@ -159,7 +160,7 @@ export const FormPage2 = () => {
             <Button
               type="button"
               onClick={addAdvantageField}
-              className="ml-auto !mt-0"
+              className="ml-auto !mt-1"
             >
               +
             </Button>
