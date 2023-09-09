@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import { useAppDispatch, useAppSelector } from '../../redux/app'
 import {
   SexEnum,
+  checkBoxes,
   nextPage,
   prevPage,
   setFormData,
@@ -22,6 +23,7 @@ import {
   Label,
   Select,
   RadioGroup,
+  CheckboxGroup,
 } from '../shared/Form/Form'
 
 const formSchema = yup.object().shape({
@@ -34,9 +36,11 @@ const formSchema = yup.object().shape({
     .array()
     .of(yup.string().required('Advantage is required'))
     .required('Advantages are required'),
-  // checkbox: yup
-  //   .string()
-  //   .required('checkbox is required')
+  checkbox: yup
+    .array()
+    .min(1, 'Must select atleast one value')
+    .of(yup.number().required('Checkbox item is required'))
+    .required('Checkbox is required'),
   radio: yup.string().required('Radio is required'),
   sex: yup.string().oneOf(Object.values(SexEnum)).required('Sex is required'),
 })
@@ -44,10 +48,8 @@ const formSchema = yup.object().shape({
 export const FormPage2 = () => {
   const dispatch = useAppDispatch()
   const formData = useAppSelector((state) => state.formState.formData)
-
-  // checkbox - array number, group CheckboxGroup
-
   const [advantages, setAdvantages] = useState(formData.advantages)
+  const [checkboxState, setCheckboxState] = useState(formData.checkbox)
 
   const addAdvantageField = () => {
     setAdvantages([...advantages, ''])
@@ -66,11 +68,12 @@ export const FormPage2 = () => {
     formState: { errors },
     watch,
     setValue,
+    getValues,
   } = useForm({
     defaultValues: {
       about: formData.about,
       advantages: advantages,
-      // checkbox: formData.checkbox,
+      checkbox: checkboxState,
       radio: formData.radio,
       sex: formData.sex,
     },
@@ -89,6 +92,12 @@ export const FormPage2 = () => {
   const advantageswatch = watch('advantages')
   console.log('advantageswatch:', advantageswatch)
 
+  const checkboxwatch = watch('checkbox')
+  console.log('checkboxwatch:', checkboxwatch)
+
+  const genderwatch = watch('sex')
+  console.log('genderwatch:', genderwatch)
+
   useEffect(() => {
     console.log('formData redux', formData)
   }, [formData])
@@ -96,6 +105,17 @@ export const FormPage2 = () => {
   useEffect(() => {
     console.log('advantages', advantages)
   }, [advantages])
+
+  useEffect(() => {
+    console.log('checkboxState', checkboxState)
+    setValue('checkbox', checkboxState)
+  }, [checkboxState])
+
+  const formValues = getValues()
+
+  useEffect(() => {
+    console.log('formValues', formValues)
+  }, [formValues])
 
   return (
     <div>
@@ -208,6 +228,60 @@ export const FormPage2 = () => {
             )}
           />
           {errors.radio && <ErrorText>{errors.radio.message}</ErrorText>}
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="checkbox">Checkbox</Label>
+          {checkBoxes.map((checkbox) => {
+            return (
+              <Controller
+                key={checkbox.name}
+                name="checkbox"
+                control={control}
+                render={({ field }) => {
+                  // console.log('field', field)
+                  // {name: 'checkbox', value: Array(0), onChange: ƒ, onBlur: ƒ, ref: ƒ}
+                  // name: "checkbox"
+                  // onBlur: () => {…}
+                  // onChange: (event) => {…}
+                  // ref: (elm) => {…}
+                  // value: [] //  value: true
+                  return (
+                    <>
+                      <CheckboxGroup>
+                        <input
+                          type="checkbox"
+                          {...field}
+                          value={checkbox.name}
+                          checked={field.value.includes(checkbox.name)}
+                          id={String(checkbox.name)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setCheckboxState((state) => [
+                                ...state,
+                                +e.target.value,
+                              ])
+                            } else {
+                              setCheckboxState((state) =>
+                                state.filter(
+                                  (number) => number !== +e.target.value,
+                                ),
+                              )
+                            }
+                            // setValue('checkbox', checkboxState) // ! not in sync / delayed ?
+                          }}
+                        />
+                        <label htmlFor={String(checkbox.name)}>
+                          {checkbox.name}
+                        </label>
+                      </CheckboxGroup>
+                    </>
+                  )
+                }}
+              />
+            )
+          })}
+          {errors.checkbox && <ErrorText>{errors.checkbox.message}</ErrorText>}
         </FormGroup>
 
         <FormGroup>

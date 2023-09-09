@@ -97,6 +97,13 @@ const RadioGroup = styled.div`
   margin-bottom: 0.4rem;
 `
 
+const CheckboxGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+`
+
 export {
   Header,
   List,
@@ -111,4 +118,5 @@ export {
   Textarea,
   Select,
   RadioGroup,
+  CheckboxGroup,
 }

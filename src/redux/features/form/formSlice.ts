@@ -11,7 +11,7 @@ export enum SexEnum {
 export interface FormData {
   advantages: string[]
   about: string
-  checkbox: string
+  checkbox: number[]
   email: string
   firstName: string
   name: string
@@ -33,11 +33,26 @@ interface FormState {
   formData: FormData
 }
 
+export const checkBoxes = [
+  {
+    checked: false,
+    name: 1,
+  },
+  {
+    checked: false,
+    name: 2,
+  },
+  {
+    checked: false,
+    name: 3,
+  },
+]
+
 const initialState: FormState = {
   formData: {
     about: '',
     advantages: [''],
-    checkbox: '',
+    checkbox: [],
     email: '',
     firstName: '',
     name: 'John Doe',
