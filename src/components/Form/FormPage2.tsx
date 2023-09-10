@@ -6,7 +6,7 @@ import * as yup from 'yup'
 
 import { useAppDispatch, useAppSelector } from '../../redux/app'
 import {
-  SexEnum,
+  GenderEnum,
   checkBoxes,
   nextPage,
   prevPage,
@@ -41,8 +41,11 @@ const formSchema = yup.object().shape({
     .min(1, 'Must select atleast one value')
     .of(yup.number().required('Checkbox item is required'))
     .required('Checkbox is required'),
+  gender: yup
+    .string()
+    .oneOf(Object.values(GenderEnum))
+    .required('Gender is required'),
   radio: yup.string().required('Radio is required'),
-  sex: yup.string().oneOf(Object.values(SexEnum)).required('Sex is required'),
 })
 
 export const FormPage2 = () => {
@@ -74,8 +77,8 @@ export const FormPage2 = () => {
       about: formData.about,
       advantages: advantages,
       checkbox: checkboxState,
+      gender: formData.gender,
       radio: formData.radio,
-      sex: formData.sex,
     },
     resolver: yupResolver(formSchema),
   })
@@ -95,7 +98,7 @@ export const FormPage2 = () => {
   const checkboxwatch = watch('checkbox')
   console.log('checkboxwatch:', checkboxwatch)
 
-  const genderwatch = watch('sex')
+  const genderwatch = watch('gender')
   console.log('genderwatch:', genderwatch)
 
   useEffect(() => {
@@ -188,21 +191,23 @@ export const FormPage2 = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="sex">Sex</Label>
+          <Label htmlFor="gender">Gender</Label>
           <Controller
-            name="sex"
+            name="gender"
             control={control}
             render={({ field }) => (
-              <Select {...field} id="sex" value="">
-                <option value="" disabled hidden>
-                  choose sex...
+              // <Select {...field} id="gender" value="">
+              // <Select {...field} id="gender" defaultValue="">
+              <Select {...field} id="gender">
+                <option value="" disabled selected>
+                  choose gender...
                 </option>
-                <option value={SexEnum.Male}>male</option>
-                <option value={SexEnum.Female}>female</option>
+                <option value={GenderEnum.Male}>{GenderEnum.Male}</option>
+                <option value={GenderEnum.Female}>{GenderEnum.Female}</option>
               </Select>
             )}
           />
-          {errors.sex && <ErrorText>{errors.sex.message}</ErrorText>}
+          {errors.gender && <ErrorText>{errors.gender.message}</ErrorText>}
         </FormGroup>
 
         <FormGroup>

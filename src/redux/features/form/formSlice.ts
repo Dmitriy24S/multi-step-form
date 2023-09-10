@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-// export type Sex = 'male' | 'female' | ''
-// export type Sex = SexEnum | ''
-export enum SexEnum {
+// export type Gender = 'male' | 'female' | ''
+// export type Gender = GenderEnum | ''
+export enum GenderEnum {
   Male = 'male',
   Female = 'female',
   Empty = '',
@@ -14,11 +14,11 @@ export interface FormData {
   checkbox: number[]
   email: string
   firstName: string
+  gender: GenderEnum
   name: string
   nickname: string
   phone: string
   radio: string
-  sex: SexEnum
   surname: string
 }
 
@@ -55,11 +55,11 @@ const initialState: FormState = {
     checkbox: [],
     email: '',
     firstName: '',
+    gender: GenderEnum.Empty,
     name: 'John Doe',
     nickname: '',
     phone: '',
     radio: '',
-    sex: SexEnum.Empty,
     surname: '',
   },
   formPage: 1,
