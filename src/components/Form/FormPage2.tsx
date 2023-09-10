@@ -218,15 +218,33 @@ export const FormPage2 = () => {
             render={({ field }) => (
               <>
                 <RadioGroup>
-                  <input type="radio" {...field} value="one" id="one" />
+                  <input
+                    type="radio"
+                    {...field}
+                    value="one"
+                    id="one"
+                    checked={field.value === 'one'}
+                  />
                   <label htmlFor="one">One</label>
                 </RadioGroup>
                 <RadioGroup>
-                  <input type="radio" {...field} value="two" id="two" />
+                  <input
+                    type="radio"
+                    {...field}
+                    value="two"
+                    id="two"
+                    checked={field.value === 'two'}
+                  />
                   <label htmlFor="two">Two</label>
                 </RadioGroup>
                 <RadioGroup>
-                  <input type="radio" {...field} value="three" id="three" />
+                  <input
+                    type="radio"
+                    {...field}
+                    value="three"
+                    id="three"
+                    checked={field.value === 'three'}
+                  />
                   <label htmlFor="three">Three</label>
                 </RadioGroup>
               </>
