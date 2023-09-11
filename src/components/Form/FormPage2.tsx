@@ -13,7 +13,7 @@ import {
   setFormData,
 } from '../../redux/features/form/formSlice'
 import type { FormData } from '../../redux/features/form/formSlice'
-import { Button, FormNavigationButtonContainer } from '../shared/Button/Button'
+import { Button, FormNavigationButtonContainer } from '../shared/Button'
 import {
   ErrorText,
   Form,
@@ -24,7 +24,7 @@ import {
   Select,
   RadioGroup,
   CheckboxGroup,
-} from '../shared/Form/Form'
+} from '../shared/Form'
 
 const formSchema = yup.object().shape({
   about: yup

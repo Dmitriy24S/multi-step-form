@@ -11,15 +11,9 @@ import {
   setFormData,
 } from '../../redux/features/form/formSlice'
 import type { FormData } from '../../redux/features/form/formSlice'
-import { FormNavigationButtonContainer, Button } from '../shared/Button/Button'
-import {
-  ErrorText,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  MaskedInput,
-} from '../shared/Form/Form'
+import { FormNavigationButtonContainer, Button } from '../shared/Button'
+import { ErrorText, Form, FormGroup, Label, MaskedInput } from '../shared/Form'
+import { TextField } from '../shared/TextField'
 
 const formSchema = yup.object().shape({
   email: yup
@@ -102,55 +96,28 @@ export const FormPage1 = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormGroup>
-        <Label htmlFor="nickname">Nickname</Label>
-        <Controller
-          name="nickname"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              // autoFocus
-              id="nickname"
-              type="text"
-              placeholder="e.g. Nickname"
-            />
-          )}
-        />
-        {errors.nickname && <ErrorText>{errors.nickname.message}</ErrorText>}
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="firstName">First Name</Label>
-        <Controller
-          name="firstName"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              id="firstName"
-              type="text"
-              placeholder="e.g. First Name"
-            />
-          )}
-        />
-        {errors.firstName && <ErrorText>{errors.firstName.message}</ErrorText>}
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="surname">Surname</Label>
-        <Controller
-          name="surname"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              id="surname"
-              type="text"
-              placeholder="e.g. Surname"
-            />
-          )}
-        />
-        {errors.surname && <ErrorText>{errors.surname.message}</ErrorText>}
-      </FormGroup>
+      <TextField
+        name={'nickname'}
+        control={control}
+        errors={errors}
+        placeholder={'e.g. Nickname'}
+        type="text"
+      />
+      <TextField
+        name={'first Name'}
+        control={control}
+        errors={errors}
+        placeholder={'e.g. First Name'}
+        type="text"
+      />
+      <TextField
+        name={'surname'}
+        control={control}
+        errors={errors}
+        placeholder={'e.g. Surname'}
+        type="text"
+      />
+
       <FormGroup>
         <Label htmlFor="phone">Phone</Label>
         <Controller
@@ -182,22 +149,14 @@ export const FormPage1 = () => {
         />
         {errors.phone && <ErrorText>{errors.phone.message}</ErrorText>}
       </FormGroup>
-      <FormGroup>
-        <Label htmlFor="email">Email</Label>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              id="email"
-              type="text"
-              placeholder="john.doe@email.com"
-            />
-          )}
-        />
-        {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-      </FormGroup>
+
+      <TextField
+        name={'email'}
+        control={control}
+        errors={errors}
+        placeholder={'john.doe@email.com'}
+        type="email"
+      />
 
       <FormNavigationButtonContainer>
         <Button type="button" onClick={() => dispatch(prevPage())}>

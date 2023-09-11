@@ -11,19 +11,19 @@ import { MOBILE_VIEWPORT } from '../../common/const'
 import { useAppDispatch, useAppSelector } from '../../redux/app'
 import type { FormData } from '../../redux/features/form/formSlice'
 import { nextPage, setFormData } from '../../redux/features/form/formSlice'
-import { Button } from '../shared/Button/Button'
+import { Button } from '../shared/Button'
 import {
   ErrorText,
   Form,
   FormGroup,
   Header,
-  Input,
   Label,
   Link,
   List,
   ListItem,
   MaskedInput,
-} from '../shared/Form/Form'
+} from '../shared/Form'
+import { TextField } from '../shared/TextField'
 
 const formSchema = yup.object().shape({
   // .email('Invalid email format'),
@@ -133,22 +133,13 @@ export const FormIntro = () => {
           />
           {errors.phone && <ErrorText>{errors.phone.message}</ErrorText>}
         </FormGroup>
-        <FormGroup>
-          <Label htmlFor="email">Email</Label>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                id="email"
-                type="text"
-                placeholder="john.doe@email.com"
-              />
-            )}
-          />
-          {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-        </FormGroup>
+        <TextField
+          name={'email'}
+          control={control}
+          errors={errors}
+          placeholder={'john.doe@email.com'}
+          type="email"
+        />
         <Button type="submit">Start</Button>
       </Form>
     </>

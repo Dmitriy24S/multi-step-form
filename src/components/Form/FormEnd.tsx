@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '../../redux/app'
 import { setPage } from '../../redux/features/form/formSlice'
-import { Button } from '../shared/Button/Button'
+import { Button } from '../shared/Button'
 
 export const FormEnd = () => {
   const navigate = useNavigate()
