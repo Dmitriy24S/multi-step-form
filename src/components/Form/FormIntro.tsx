@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useRef } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { AiOutlineLink } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -12,32 +11,31 @@ import { useAppDispatch, useAppSelector } from '../../redux/app'
 import type { FormData } from '../../redux/features/form/formSlice'
 import { nextPage, setFormData } from '../../redux/features/form/formSlice'
 import { Button } from '../shared/Button'
-import {
-  ErrorText,
-  Form,
-  FormGroup,
-  Header,
-  Label,
-  Link,
-  List,
-  ListItem,
-  MaskedInput,
-} from '../shared/Form'
-import { TextField } from '../shared/TextField'
+import { Form, Header, Link, List, ListItem } from '../shared/Form'
 
-const formSchema = yup.object().shape({
-  // .email('Invalid email format'),
-  email: yup
-    .string()
-    .required('Email is required')
-    .test('is-email', 'Invalid email format', (value) =>
-      validator.isEmail(value),
-    ),
-  phone: yup
-    .string()
-    .matches(/^7\d{9}$/, 'Wrong phone format. e.g. +7 543 210 000')
-    .required('Phone is required'),
-})
+import { FormIntroFields } from './FormIntroFields'
+
+export interface FormIntroSchemaType {
+  email: string
+  phone: string
+}
+
+export const getFormSchema = () =>
+  yup.object().shape({
+    // .email('Invalid email format'),
+    email: yup
+      .string()
+      .required('Email is required')
+      .test('is-email', 'Invalid email format', (value) =>
+        validator.isEmail(value),
+      ),
+    phone: yup
+      .string()
+      .matches(/^7\d{9}$/, 'Wrong phone format. e.g. +7 543 210 000')
+      .required('Phone is required'),
+  })
+
+const formSchema = getFormSchema()
 
 export const FormIntro = () => {
   const navigate = useNavigate()
@@ -45,28 +43,19 @@ export const FormIntro = () => {
   const formData = useAppSelector((state) => state.formState.formData)
   const links = useAppSelector((state) => state.formState.links)
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm({
-    defaultValues: {
-      email: formData.email,
-      phone: formData.phone,
-    },
-    resolver: yupResolver(formSchema),
-  })
-
   const nameShort = formData?.name
     .split(' ')
     .map((word) => word[0])
     .join('')
 
-  const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/\s/g, '') // Remove spaces from the phone number input
-    setValue('phone', inputValue) // Update the phone field value without spaces
-  }
+  const methods = useForm<FormIntroSchemaType>({
+    defaultValues: {
+      email: formData.email,
+      phone: formData.phone,
+    },
+    mode: 'onBlur',
+    resolver: yupResolver(formSchema),
+  })
 
   const onSubmit = async (data: Partial<FormData>) => {
     // data {email: 'dd@dd', phone: '7888888999'}
@@ -74,14 +63,6 @@ export const FormIntro = () => {
     dispatch(nextPage())
     navigate('/create')
   }
-
-  const phoneInputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (errors.phone) {
-      phoneInputRef?.current?.focus()
-    }
-  }, [errors.phone])
 
   return (
     <>
@@ -100,48 +81,12 @@ export const FormIntro = () => {
           </List>
         </HeaderDetails>
       </Header>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup>
-          <Label htmlFor="phone">Phone</Label>
-          <Controller
-            name="phone"
-            // autoFocus
-            control={control}
-            render={({ field }) => (
-              <MaskedInput
-                mask="9 999 999 999"
-                maskChar=""
-                value={field.value}
-                // onChange={field.onChange}
-                onChange={handlePhoneInputChange}
-              >
-                {
-                  ((inputProps: any) => {
-                    return (
-                      <input
-                        {...inputProps}
-                        id="phone"
-                        ref={phoneInputRef}
-                        type="text"
-                        placeholder="+7 543 210 000"
-                      />
-                    )
-                  }) as unknown as React.ReactNode
-                }
-              </MaskedInput>
-            )}
-          />
-          {errors.phone && <ErrorText>{errors.phone.message}</ErrorText>}
-        </FormGroup>
-        <TextField
-          name={'email'}
-          control={control}
-          errors={errors}
-          placeholder={'john.doe@email.com'}
-          type="email"
-        />
-        <Button type="submit">Start</Button>
-      </Form>
+      <FormProvider {...methods}>
+        <Form onSubmit={methods.handleSubmit(onSubmit)}>
+          <FormIntroFields />
+          <Button type="submit">Start</Button>
+        </Form>
+      </FormProvider>
     </>
   )
 }

@@ -111,5 +111,5 @@ test('TextField updates input value', async () => {
     expect(updatedInputValue).toBe('hello world')
   })
 
-  screen.debug()
+  // screen.debug()
 })
