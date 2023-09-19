@@ -3,7 +3,11 @@ module.exports = {
   root: true,
   env: {},
   globals: {},
-  extends: ['ts-prefixer', 'plugin:jsx-a11y/recommended'],
+  extends: [
+    'ts-prefixer',
+    'plugin:jsx-a11y/recommended',
+    'plugin:storybook/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['tsconfig.json'],
