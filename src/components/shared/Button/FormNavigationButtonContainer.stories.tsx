@@ -8,11 +8,12 @@ import { Button, FormNavigationButtonContainer } from './Button'
 // 👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof FormNavigationButtonContainer> = {
   component: FormNavigationButtonContainer,
-  parameters: {
-    docs: {
-      source: { type: 'code' },
-    },
-  },
+  tags: ['autodocs'],
+  // parameters: {
+  //   docs: {
+  //     source: { type: 'code' },
+  //   },
+  // },
 }
 
 export default meta

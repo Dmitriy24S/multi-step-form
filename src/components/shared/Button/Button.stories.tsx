@@ -5,11 +5,12 @@ import { Button } from './Button'
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof Button> = {
   component: Button,
-  parameters: {
-    docs: {
-      source: { type: 'code' },
-    },
-  },
+  // parameters: {
+  //   docs: {
+  //     source: { type: 'code' },
+  //   },
+  // },
+  tags: ['autodocs'],
 }
 
 export default meta
